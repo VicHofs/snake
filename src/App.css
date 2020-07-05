@@ -1,67 +1,67 @@
 body {
-  overflow: hidden;
+	overflow: hidden;
 }
 
 .modal {
-  background-color: rgb(32, 32, 32);
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  border-radius: 20px;
-  top: 350px;
-  left: 650px;
-  right: 650px;
-  bottom: 350px;
-  outline: none;
-  padding: 50px;
-  align-items: center;
+	background-color: rgb(32, 32, 32);
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	border-radius: 20px;
+	top: 350px;
+	left: 650px;
+	right: 650px;
+	bottom: 350px;
+	outline: none;
+	padding: 50px;
+	align-items: center;
 }
 
 .modal h2 {
-  font-family: 'Ubuntu', sans-serif;
-  margin: 0px;
-  margin-top: 5px;
-  font-size: 30px;
-  color: white;
+	font-family: 'Ubuntu', sans-serif;
+	margin: 0px;
+	margin-top: 5px;
+	font-size: 30px;
+	color: white;
 }
 
 .modal p {
-  font-family: 'Roboto', sans-serif;
-  margin-top: 6px;
-  color: white;
-  font-size: 18px;
+	font-family: 'Roboto', sans-serif;
+	margin-top: 6px;
+	color: white;
+	font-size: 18px;
 }
 
 .modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.555);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.555);
 }
 
 .modal button {
-  display: flex;
-  outline: none;
-  justify-content: center;
+	display: flex;
+	outline: none;
+	justify-content: center;
 	box-shadow: 0px 0px 20px -7px #3e7327c9;
 	background: linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
 	background-color: #77b55a;
 	border-radius: 12px;
 	border: 1px solid #4b8f29;
-  	color: #ffffff;
-  	align-items: center;
+	color: #ffffff;
+	align-items: center;
 	text-align: center;
 	text-shadow: 0px 1px 0px #5b8a3c;
 	font-family: 'Roboto', sans-serif;
 	font-size: 20px;
 	font-weight: bold;
 	padding: 15px;
-  	width: 70px;
-  	height: 50px;
-  	cursor: pointer;
-  	margin: 5px;
+	width: 70px;
+	height: 50px;
+	cursor: pointer;
+	margin: 5px;
 }
 
 .modal button:hover {
@@ -94,25 +94,25 @@ body {
 }
 
 .keyCap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-items: center;
-  background-color: rgb(37, 37, 37);
-  height: 100%;
-  outline: none;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-items: center;
+	background-color: rgb(37, 37, 37);
+	height: 100%;
+	outline: none;
 }
 
 .mainTitle {
-  font-family: 'Press Start 2P', cursive;
-  margin: 2%;
-  font-weight: normal;
-  color: rgb(231, 231, 231)
+	font-family: 'Press Start 2P', cursive;
+	margin: 2%;
+	font-weight: normal;
+	color: rgb(231, 231, 231);
 }
 
 .map {
-  border: 1px solid rgb(80, 80, 80);
-  background-color: rgb(32, 32, 32);
+	border: 1px solid rgb(80, 80, 80);
+	background-color: rgb(32, 32, 32);
 }
 
 .startButton {
@@ -131,8 +131,8 @@ body {
 	padding: 20px;
 	width: 200px;
 	transition: all 0.5s;
-  cursor: pointer;
-  margin: 5vh;
+	cursor: pointer;
+	margin: 5vh;
 }
 
 .startButton:focus {
@@ -178,7 +178,6 @@ body {
 	right: 0;
 }
 
-
 .restartButton {
 	display: inline-block;
 	box-shadow: 0px 0px 20px -7px #3e7327c9;
@@ -196,7 +195,7 @@ body {
 	width: 200px;
 	transition: all 0.5s;
 	cursor: pointer;
-  margin: 5vh;
+	margin: 5vh;
 }
 
 .restartButton:focus {
