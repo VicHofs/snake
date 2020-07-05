@@ -37,12 +37,22 @@ const App = () => {
 
 	const startGame = () => {
 		let newSnake = [
-			[Math.floor(Math.random() * (mapSize[0]) / mapScale), Math.floor(Math.random() * (mapSize[1]) / mapScale)]
-		  ];
-		newSnake.push(snakeSpawnPos[0].map((pos, i) => i===1? pos+1: pos));
+			[
+				Math.floor((Math.random() * mapSize[0]) / mapScale),
+				Math.floor((Math.random() * mapSize[1]) / mapScale),
+			],
+		];
+		newSnake.push(snakeSpawnPos[0].map((pos, i) => (i === 1 ? pos + 1 : pos)));
 		setSnake(newSnake);
-		let newApple = [Math.floor(Math.random() * (mapSize[0]) / mapScale), Math.floor(Math.random() * (mapSize[1]) / mapScale)];
-		while (newApple in snakeSpawnPos) newApple = [Math.floor(Math.random() * (mapSize[0]) / mapScale), Math.floor(Math.random() * (mapSize[1]) / mapScale)];
+		let newApple = [
+			Math.floor((Math.random() * mapSize[0]) / mapScale),
+			Math.floor((Math.random() * mapSize[1]) / mapScale),
+		];
+		while (newApple in snakeSpawnPos)
+			newApple = [
+				Math.floor((Math.random() * mapSize[0]) / mapScale),
+				Math.floor((Math.random() * mapSize[1]) / mapScale),
+			];
 		setApple(newApple);
 		setMomentum([0, -1]);
 		setSnakeSpeed(speed);
@@ -125,13 +135,10 @@ const App = () => {
 		if (element.requestFullscreen) {
 			element.requestFullscreen();
 		} else if (element.mozRequestFullScreen) {
-			/* Firefox */
 			element.mozRequestFullScreen();
 		} else if (element.webkitRequestFullscreen) {
-			/* Chrome, Safari and Opera */
 			element.webkitRequestFullscreen();
 		} else if (element.msRequestFullscreen) {
-			/* IE/Edge */
 			element.msRequestFullscreen();
 		}
 	}
