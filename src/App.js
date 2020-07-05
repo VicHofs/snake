@@ -26,6 +26,7 @@ const App = () => {
 	const [snake, setSnake] = useState(snakeSpawnPos);
 	const [apple, setApple] = useState(appleSpawnPos);
 	const [momentum, setMomentum] = useState([0, -1]);
+	const [syncMomentum, setSyncMomentum] = useState([0, -1]);
 	const [snakeSpeed, setSnakeSpeed] = useState(null);
 	const [gameOver, setGameOver] = useState(false);
 
@@ -95,17 +96,16 @@ const App = () => {
 	};
 
 	const gameOn = () => {
+		setSyncMomentum(momentum);
 		const snakeCopy = JSON.parse(JSON.stringify(snake));
 		const newSnakeHead = [
-			wrapAdjust(snakeCopy[0][0] + momentum[0], 0),
-			wrapAdjust(snakeCopy[0][1] + momentum[1], 1),
+			wrapAdjust(snakeCopy[0][0] + syncMomentum[0], 0),
+			wrapAdjust(snakeCopy[0][1] + syncMomentum[1], 1),
 		];
 		snakeCopy.unshift(newSnakeHead);
 		if (checkCollision(newSnakeHead)) endGame();
 		if (!checkAppleCollision(snakeCopy)) snakeCopy.pop();
 		setSnake(snakeCopy);
-		console.log('head position is', newSnakeHead);
-		console.log('momentum is', momentum);
 	};
 
 	useEffect(() => {
