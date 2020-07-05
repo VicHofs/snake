@@ -1,4 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
+import UIfx from 'uifx';
+import gameOver from './assets/gameOver.mp3';
+import point from './assets/point.wav';
+import hit from './assets/hit.wav';
 import Modal from 'react-modal';
 import { useInterval } from './useInterval.js';
 import {
@@ -11,9 +15,14 @@ import {
 } from './initializer.js';
 import './App.css';
 
+const gameOverSound = new UIfx(gameOver);
+const pointSound = new UIfx(point);
+const hitSound = new UIfx(hit);
+
 const App = () => {
 	const canvasRef = useRef();
 	const [modalOpen, setModalOpen] = useState(true);
+	const [gameOverModal, setGameOverModal] = useState(false);
 	const [snake, setSnake] = useState(snakeSpawnPos);
 	const [apple, setApple] = useState(appleSpawnPos);
 	const [momentum, setMomentum] = useState([0, -1]);
@@ -26,8 +35,14 @@ const App = () => {
 	});
 
 	const startGame = () => {
-		setSnake(snakeSpawnPos);
-		setApple(appleSpawnPos);
+		let newSnake = [
+			[Math.floor(Math.random() * (mapSize[0]) / mapScale), Math.floor(Math.random() * (mapSize[1]) / mapScale)]
+		  ];
+		newSnake.push(snakeSpawnPos[0].map((pos, i) => i===1? pos+1: pos));
+		setSnake(newSnake);
+		let newApple = [Math.floor(Math.random() * (mapSize[0]) / mapScale), Math.floor(Math.random() * (mapSize[1]) / mapScale)];
+		while (newApple in snakeSpawnPos) newApple = [Math.floor(Math.random() * (mapSize[0]) / mapScale), Math.floor(Math.random() * (mapSize[1]) / mapScale)];
+		setApple(newApple);
 		setMomentum([0, -1]);
 		setSnakeSpeed(speed);
 		setGameOver(false);
@@ -41,14 +56,15 @@ const App = () => {
 				newMomentum.map(Math.abs)[1] !== momentum.map(Math.abs)[1]
 			)
 				setMomentum(newMomentum);
-		}
-		else if (keyCode === 13 || keyCode === 32) startGame();
+		} else if (keyCode === 13 || keyCode === 32) startGame();
 	};
 
 	const endGame = () => {
+		setGameOverModal(true);
+		hitSound.play();
+		gameOverSound.play();
 		setSnakeSpeed(null);
 		setGameOver(true);
-		alert('GAME OVER!');
 	};
 
 	const wrapAdjust = (value, index) => {
@@ -69,6 +85,7 @@ const App = () => {
 
 	const checkAppleCollision = (snek) => {
 		if (snek[0][0] === apple[0] && snek[0][1] === apple[1]) {
+			pointSound.play();
 			let newApple = spawnApple();
 			while (checkCollision(newApple, snek)) spawnApple();
 			setApple(newApple);
@@ -106,15 +123,18 @@ const App = () => {
 
 	function openFullscreen() {
 		if (element.requestFullscreen) {
-		  element.requestFullscreen();
-		} else if (element.mozRequestFullScreen) { /* Firefox */
-		  element.mozRequestFullScreen();
-		} else if (element.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-		  element.webkitRequestFullscreen();
-		} else if (element.msRequestFullscreen) { /* IE/Edge */
-		  element.msRequestFullscreen();
+			element.requestFullscreen();
+		} else if (element.mozRequestFullScreen) {
+			/* Firefox */
+			element.mozRequestFullScreen();
+		} else if (element.webkitRequestFullscreen) {
+			/* Chrome, Safari and Opera */
+			element.webkitRequestFullscreen();
+		} else if (element.msRequestFullscreen) {
+			/* IE/Edge */
+			element.msRequestFullscreen();
 		}
-	  }
+	}
 
 	return (
 		<div
@@ -123,11 +143,30 @@ const App = () => {
 			tabIndex="-1"
 			onKeyDown={(event) => move(event.keyCode)}
 		>
-			<Modal className="modal" overlayClassName="modalOverlay" isOpen={modalOpen} onRequestClose={() => setModalOpen(false)}>
-				<h2 className="modalTitle">Would you like to enable fullscreen?</h2>
-				<p className="modalBody">(Recommended)</p>
-				<button className="modalButton"onClick={() => {setModalOpen(false); openFullscreen()}}>Ok</button>
-
+			<Modal
+				className="gameOverModal"
+				overlayClassName="modalOverlay"
+				isOpen={gameOverModal}
+				onRequestClose={() => setGameOverModal(false)}
+			>
+				<h1 className="mainTitle">Game Over!</h1>
+			</Modal>
+			<Modal
+				className="modal"
+				overlayClassName="modalOverlay"
+				isOpen={modalOpen}
+				onRequestClose={() => setModalOpen(false)}
+			>
+				<h2>Would you like to enable fullscreen?</h2>
+				<p>(Recommended)</p>
+				<button
+					onClick={() => {
+						setModalOpen(false);
+						openFullscreen();
+					}}
+				>
+					Ok
+				</button>
 			</Modal>
 			<h1 className="mainTitle">Classic Snake</h1>
 			<canvas
@@ -136,8 +175,10 @@ const App = () => {
 				width={`${mapSize[0]}px`}
 				height={`${mapSize[1]}px`}
 			/>
-			{/* {gameOver && <div>GAME OVER!</div>} */}
-			<button className={!snakeSpeed ? 'startButton' : 'restartButton'} onClick={startGame}>
+			<button
+				className={!snakeSpeed ? 'startButton' : 'restartButton'}
+				onClick={startGame}
+			>
 				<span>{!snakeSpeed ? 'Start Game ' : 'Restart Game '}</span>
 			</button>
 		</div>
